@@ -363,6 +363,9 @@ running = True
 playing = True
 time_start = time()
 
+# Кадры в секунду
+fps = 165
+
 # Отслеживание последнего хода для отображения рыбки
 last_opened_cell = None, None
 
@@ -486,7 +489,7 @@ while running:
     pygame.display.update()
 
     pygame.display.flip()
-    clock.tick(144)
+    clock.tick(fps)
 
 
 pygame.quit()
