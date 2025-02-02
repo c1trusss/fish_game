@@ -11,4 +11,4 @@
 
 **Презентация**  
   
-https://www.figma.com/deck/aNrij3fSL5uWSXaKhXOxnu/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-pygame?node-id=41-91&viewport=204%2C136%2C0.27&t=S4IalAd54UY4dtIh-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
+[>Тык<](https://www.figma.com/deck/aNrij3fSL5uWSXaKhXOxnu/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-pygame?node-id=41-91&viewport=204%2C136%2C0.27&t=S4IalAd54UY4dtIh-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
