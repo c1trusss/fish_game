@@ -1,7 +1,7 @@
 import random
 import os
 import sys
-from time import time, sleep
+from time import time
 import sqlite3
 from datetime import datetime
 
@@ -14,21 +14,41 @@ from PyQt6.QtWidgets import QApplication, QDialog
 class Time:
 
     def __init__(self, seconds=0):
+
+        """
+        Класс для работы со временем
+        :param seconds: время в секундах
+        """
+
         self.time = seconds
         self.seconds = seconds % 60
         self.minutes = seconds // 60
 
     def __str__(self):
+
         return f"{self.minutes:02d}:{self.seconds:02d}"
 
 
 class Database:
 
     def __init__(self):
+
+        """
+        Класс для работы с БД
+        """
+
         self.connection = sqlite3.connect("fish.db")
         self.cursor = self.connection.cursor()
 
     def execute(self, sql: str, parameters=tuple()):
+
+        """
+        "Удобный" execute. Позволяет сохранить изменения, не вызывая команду commit.
+        :param sql:
+        :param parameters:
+        :return:
+        """
+
         result = self.cursor.execute(sql, parameters)
         self.connection.commit()
         return result
@@ -64,6 +84,7 @@ class Board:
         self.cell_size = cell_size
 
     def draw_cell(self, surface, x, y, fill=None):
+
         if isinstance(fill, str):
             hooks = pygame.sprite.Group()
             fishhook = pygame.sprite.Sprite()
@@ -78,7 +99,9 @@ class Board:
             hooks.add(fishhook)
 
             hooks.draw(screen)
+
         elif fill:
+
             pygame.draw.rect(
                 surface,
                 fill,
@@ -89,7 +112,9 @@ class Board:
                     self.cell_size - 2
                 )
             )
+
         else:
+
             pygame.draw.rect(
                 surface,
                 (255, 255, 255),
@@ -107,14 +132,18 @@ class Board:
             for x in range(self.width):
                 self.draw_cell(surface, x, y)
                 cell = self.board[y][x]
+
+                # Определение цвета
                 color = (0, 0, 0)
                 if cell == 10:
                     color = (255, 0, 0)
                 elif cell == 2:
                     color = (0, 0, 255)
+
                 self.draw_cell(surface, x, y, fill=color)
 
     def get_cell(self, mouse_pos):
+
         x = (mouse_pos[0] - self.left) // self.cell_size
         y = (mouse_pos[1] - self.top) // self.cell_size
         if 0 <= x < self.width and 0 <= y < self.height:
@@ -124,7 +153,6 @@ class Board:
 
     def on_click(self, cell_coords):
         x, y = cell_coords
-
 
     def get_click(self, mouse_pos):
         cell = self.get_cell(mouse_pos)
@@ -141,6 +169,13 @@ class FishGame(Board):
                 self.board[y][x] = -10
 
     def mines_around(self, x, y):
+
+        """
+        Определение количества крючков вокруг конкретной клетки
+        :param x: номер клетки по x
+        :param y: номер клетки по y
+        :return: количество крючков
+        """
 
         neighbours = [(x - 1, y - 1),
                       (x, y - 1),
@@ -328,9 +363,12 @@ running = True
 playing = True
 time_start = time()
 
+# Отслеживание последнего хода для отображения рыбки
 last_opened_cell = None, None
 
 while running:
+
+    # Время с начала игры
     time_now = int(time() - time_start)
 
     for event in pygame.event.get():
@@ -353,10 +391,12 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             fish_game.get_click(event.pos)
 
+    # Загрузка фона
     image = load_image("sea.png")
     try:
         screen.blit(image, (0, 0))
     except pygame.error:
+        print("Ошибка загрузки, перезапустите игру!")
         break
 
     border = not playing
@@ -447,5 +487,6 @@ while running:
 
     pygame.display.flip()
     clock.tick(144)
+
 
 pygame.quit()
