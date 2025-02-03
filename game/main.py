@@ -335,6 +335,7 @@ screen = pygame.display.set_mode(size)
 
 # Подбор кол-ва мин в зависимости от уровня
 match menu.level:
+
     case "easy":
         mines = 5
     case "medium":
@@ -359,6 +360,7 @@ def load_image(name, colorkey=None):
 fish_game = FishGame(mines=mines)
 clock = pygame.time.Clock()
 
+# Служебные переменные
 running = True
 playing = True
 time_start = time()
@@ -435,7 +437,9 @@ while running:
         seconds = time_now % 60
         time_text = font.render(f'{minutes:0>2}:{seconds:0>2}', True, "white")
         screen.blit(time_text, (600, 75))
+
     else:
+        # Если игра закончена, вместо секундомера появляется финальное сообщение
         font = pygame.font.Font(None, 50)
         res_text = font.render(msg, True, "white")
         screen.blit(res_text, (600, 75))
@@ -457,6 +461,7 @@ while running:
 
     # Кнопка новой игры
     new_game = pygame.sprite.Sprite()
+
     new_game.image = pygame.transform.scale(load_image("button.png"), (300, 100))
     new_game.rect = new_game.image.get_rect()
     new_game.mask = pygame.mask.from_surface(new_game.image)
@@ -468,6 +473,7 @@ while running:
 
     # Кнопка выбора уровня
     choose_level = pygame.sprite.Sprite()
+
     choose_level.image = pygame.transform.scale(load_image("choose_level.png"), (300, 100))
     choose_level.rect = choose_level.image.get_rect()
     choose_level.mask = pygame.mask.from_surface(choose_level.image)
@@ -486,10 +492,10 @@ while running:
     else:
         all_sprites.draw(screen)
 
+    # Обновление дисплея
     pygame.display.update()
 
     pygame.display.flip()
     clock.tick(fps)
-
 
 pygame.quit()
